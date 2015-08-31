@@ -1,0 +1,9 @@
+{
+    "name": "message-frontend",
+    "version": "0.0.1",
+    "dependencies": {
+        "bootstrap": null,
+        "angular": null,
+        "c3": null
+    }
+}
