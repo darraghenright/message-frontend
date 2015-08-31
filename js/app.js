@@ -132,9 +132,9 @@ app.directive('analyticsMessages', function($window, $http) {
 });
 
 /**
- * analyticsCurrencies
+ * analyticsRates
  */
-app.directive('analyticsCurrencies', function($window, $http) {
+app.directive('analyticsRates', function($window, $http) {
   return {
     replace: true,
     restrict: 'A',
@@ -142,7 +142,7 @@ app.directive('analyticsCurrencies', function($window, $http) {
       range: '=',
       ajax:  '@'
     },
-    templateUrl: 'view/directive/analytics-currencies.html',
+    templateUrl: 'view/directive/analytics-rates.html',
     link: function(scope, element) {
       $http.get(scope.ajax)
         .error(function() {
@@ -150,6 +150,49 @@ app.directive('analyticsCurrencies', function($window, $http) {
         })
         .success(function(json) {
           scope.$watch('range', function(range) {
+
+            //
+
+            // build chart
+            $window.c3.generate({
+              axis: {
+                x: {
+                  type: 'timeseries',
+                  tick: {
+                    fit: true,
+                    format: '%e %b'
+                  }
+                },
+                y: {
+                  tick: {
+                    format: function(d) {
+                      // https://github.com/mbostock/d3/wiki/Formatting#numbers
+                      return d3.format('.3r')(d);
+                    }
+                  }
+                }
+              },
+              bindto: '#analytics-rates',
+              data: {
+                x: 'Date',
+                columns: [
+                  ['Date'].concat(json.dates.slice(range)),
+                  ['USD/EUR'].concat(json.rates.slice(range))
+                ],
+                type: 'spline',
+              },
+              grid: {
+                y: {
+                  show: true
+                }
+              },
+              zoom: {
+                enabled: (range === 0) // enable zoom for 'All Time' view
+              }
+            });
+
+
+            //
 
           });
         });
