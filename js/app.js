@@ -1,4 +1,62 @@
-(function() {
-  'use strict';
-  alert('dsfdsf');
-})();
+/*jshint globalstrict: true */
+/*global angular: true, d3: true */
+
+var app = angular.module('analytics', []);
+
+/**
+ * ranges
+ */
+app.value('ranges', [
+  { name: 'Last 7 days',  value:  -7 },
+  { name: 'Last 14 days', value: -14 },
+  { name: 'Last 30 days', value: -30 },
+  { name: 'All time',     value:   0 }
+]);
+
+/**
+ * analyticsRange
+ *
+ * Range select to slice JSON data.
+ * Injects `ranges` values.
+ */
+app.directive('analyticsRange', function(ranges) {
+  return {
+    replace: true,
+    restrict: 'A',
+    template: [
+      '<div class="de-analytics-range">',
+        '<select ng-model="range" class="form-control" ng-options="r.value as r.name for r in ranges"></select>',
+      '</div>'
+    ].join(''),
+    link: function(scope) {
+      scope.ranges = ranges;
+      scope.range  = ranges[0].value;
+    }
+  };
+});
+
+/**
+ * analyticsDates
+ *
+ * Show data date range according to selected analyticsRange
+ */
+app.directive('analyticsDates', function($http) {
+  return {
+    replace: true,
+    restrict: 'A',
+    scope: {
+      range: '=',
+      ajax:  '@',
+    },
+    template: '<div>{{ first }} to {{ last }}</div>',
+    link: function(scope, el, attr) {
+      $http.get(scope.ajax)
+        .success(function(json) {
+          scope.last = json.dates.slice(-1)[0];
+          scope.$watch('range', function(range) {
+            scope.first = json.dates.slice(range)[0];
+          });
+        });
+    }
+  };
+});
