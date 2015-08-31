@@ -41,7 +41,8 @@ app.directive('analyticsRange', function(ranges) {
 /**
  * analyticsDates
  *
- * Show data date range according to selected analyticsRange
+ * Show data date range according
+ * to selected analyticsRange.
  */
 app.directive('analyticsDates', function($http) {
   return {
