@@ -90,7 +90,32 @@ app.directive('analyticsUsers', function($window, $http) {
         })
         .success(function(json) {
           scope.$watch('range', function(range) {
-
+            // build chart
+            $window.c3.generate({
+              axis: {
+                x: {
+                  type: 'timeseries',
+                  tick: {
+                    fit: true,
+                    format: '%e %b'
+                  }
+                }
+              },
+              bindto: '#analytics-users',
+              data: {
+                x: 'date',
+                columns: [
+                  ['date'].concat(json.date.slice(range)),
+                  ['users'].concat(json.users.slice(range))
+                ],
+                type: 'spline',
+              },
+              grid: {
+                y: {
+                  show: true
+                }
+              }
+            });
           });
         });
     }
