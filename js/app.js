@@ -114,6 +114,9 @@ app.directive('analyticsUsers', function($window, $http) {
                 y: {
                   show: true
                 }
+              },
+              zoom: {
+                enabled: (range === 0) // enable zoom for 'All Time' view
               }
             });
           });
