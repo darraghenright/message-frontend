@@ -72,6 +72,58 @@ app.directive('analyticsDates', function($http) {
 });
 
 /**
+ * analyticsUsers
+ */
+app.directive('analyticsUsers', function($window, $http) {
+  return {
+    replace: true,
+    restrict: 'A',
+    scope: {
+      range: '=',
+      ajax:  '@'
+    },
+    templateUrl: 'view/directive/analytics-users.html',
+    link: function(scope, element) {
+      $http.get(scope.ajax)
+        .error(function() {
+          element.text('Sorry! No data was retrieved for this view. Please try again later.');
+        })
+        .success(function(json) {
+          scope.$watch('range', function(range) {
+
+          });
+        });
+    }
+  };
+});
+
+/**
+ * analyticsCurrencies
+ */
+app.directive('analyticsCurrencies', function($window, $http) {
+  return {
+    replace: true,
+    restrict: 'A',
+    scope: {
+      range: '=',
+      ajax:  '@'
+    },
+    templateUrl: 'view/directive/analytics-currencies.html',
+    link: function(scope, element) {
+      $http.get(scope.ajax)
+        .error(function() {
+          element.text('Sorry! No data was retrieved for this view. Please try again later.');
+        })
+        .success(function(json) {
+          scope.$watch('range', function(range) {
+
+          });
+        });
+    }
+  };
+});
+
+/**
  * analyticsCountries
  */
 app.directive('analyticsCountries', function($window, $http) {
@@ -85,8 +137,8 @@ app.directive('analyticsCountries', function($window, $http) {
     templateUrl: 'view/directive/analytics-countries.html',
     link: function(scope, element) {
       $http.get(scope.ajax)
-        .error(function(data) {
-          element.text(data);
+        .error(function() {
+          element.text('Sorry! No data was retrieved for this view. Please try again later.');
         })
         .success(function(json) {
           scope.$watch('range', function(range) {
