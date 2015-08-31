@@ -82,12 +82,7 @@ app.directive('analyticsCountries', function($window, $http) {
       range: '=',
       ajax:  '@'
     },
-    template: [
-        '<div id="analytics-countries">',
-          '<div class="analytics-loading">Loading countries... One moment.</div>',
-        '</div>',
-      '</div>'
-    ].join(''),
+    templateUrl: 'view/directive/analytics-countries.html',
     link: function(scope, element) {
       $http.get(scope.ajax)
         .error(function(data) {
@@ -96,7 +91,7 @@ app.directive('analyticsCountries', function($window, $http) {
         .success(function(json) {
           scope.$watch('range', function(range) {
             // build columns
-            var columns = json.map(function(country) {
+            scope.columns = json.map(function(country) {
               // apply range and sum value
               var rangeTotal = country.data.slice(range)
                 .reduce(function(curr, prev) {
@@ -109,7 +104,7 @@ app.directive('analyticsCountries', function($window, $http) {
             $window.c3.generate({
               bindto: '#analytics-countries',
               data: {
-                columns: columns,
+                columns: scope.columns,
                 type : 'donut'
               },
               donut: {

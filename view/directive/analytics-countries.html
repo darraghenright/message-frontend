@@ -1,0 +1,23 @@
+<div>
+    <div class="col-md-6">
+        <div id="analytics-countries">
+            <div class="analytics-loading">Loading countries... One moment.</div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Originating Country</th>
+                    <th>Request Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="country in columns">
+                    <td>{{ country[0] }}</td>
+                    <td>{{ country[1] }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
