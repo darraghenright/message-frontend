@@ -54,7 +54,7 @@ app.directive('analyticsDates', function($http) {
       ajax:  '@', // one-way binding
     },
     template: [
-      '<div>',
+      '<div class="analytic-dates">',
         '<div ng-hide="last" class="analytics-loading">Loading dates... One moment.</div>',
         '<div ng-show="last">{{ first }} to {{ last }}</div>',
       '</div>'
@@ -160,7 +160,7 @@ app.directive('analyticsCurrencies', function($window, $http) {
 /**
  * analyticsCountries
  */
-app.directive('analyticsCountries', function($window, $http) {
+app.directive('analyticsCountries', function($window, $http, $timeout) {
   return {
     replace: true,
     restrict: 'A',

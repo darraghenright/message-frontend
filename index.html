@@ -7,16 +7,7 @@
         <!-- lib css -->
         <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="vendor/c3/c3.min.css">
-        <style type="text/css">
-        .range
-        {
-            margin-top: 24px;
-        }
-        .analytics-loading
-        {
-            color: #999;
-        }
-        </style>
+        <link rel="stylesheet" href="css/app.css">
     </head>
     <body>
         <div class="container">
@@ -31,13 +22,13 @@
                 <div class="col-md-12">
                     <ul class="nav nav-tabs">
                         <li class="active">
+                            <a href="#countries" role="tab" data-toggle="tab">Countries</a>
+                        </li>
+                        <li>
                             <a href="#messages" role="tab" data-toggle="tab">Messages</a>
                         </li>
                         <li>
                             <a href="#currencies" role="tab" data-toggle="tab">Currencies</a>
-                        </li>
-                        <li>
-                            <a href="#countries" role="tab" data-toggle="tab">Countries</a>
                         </li>
                     </ul>
                 </div>
@@ -55,8 +46,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="tab-content">
-                        <!-- users -->
-                        <div role="tabpanel" class="tab-pane active" id="messages">
+                        <!-- countries -->
+                        <div role="tabpanel" class="tab-pane active" id="countries">
+                            <h3>Countries</h3>
+                            <div range="range" analytics-countries ajax="json/analytics-countries.php"></div>
+                        </div>
+                        <!-- messages -->
+                        <div role="tabpanel" class="tab-pane " id="messages">
                             <h3>Messages</h3>
                             <div range="range" analytics-messages ajax="json/analytics-messages.php"></div>
                         </div>
@@ -64,11 +60,6 @@
                         <div role="tabpanel" class="tab-pane" id="currencies">
                             <h3>Currencies</h3>
                             <div range="range" analytics-currencies ajax="json/analytics-currencies.php"></div>
-                        </div>
-                        <!-- countries -->
-                        <div role="tabpanel" class="tab-pane" id="countries">
-                            <h3>Countries</h3>
-                            <div range="range" analytics-countries ajax="json/analytics-countries.php"></div>
                         </div>
                     </div>
                 </div>
