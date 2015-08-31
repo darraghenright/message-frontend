@@ -23,6 +23,9 @@ app.directive('analyticsRange', function(ranges) {
   return {
     replace: true,
     restrict: 'A',
+    scope: {
+      range: '=' // two-way binding
+    },
     template: [
       '<div class="de-analytics-range">',
         '<select ng-model="range" class="form-control" ng-options="r.value as r.name for r in ranges"></select>',
@@ -45,10 +48,15 @@ app.directive('analyticsDates', function($http) {
     replace: true,
     restrict: 'A',
     scope: {
-      range: '=',
-      ajax:  '@',
+      range: '=', // two-way binding
+      ajax:  '@', // one-way binding
     },
-    template: '<div>{{ first }} to {{ last }}</div>',
+    template: [
+      '<div>',
+        '<div ng-hide="last">Loading dates... One moment.</div>',
+        '<div ng-show="last">{{ first }} to {{ last }}</div>',
+      '</div>'
+    ].join(''),
     link: function(scope, el, attr) {
       $http.get(scope.ajax)
         .success(function(json) {

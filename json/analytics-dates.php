@@ -3,6 +3,8 @@
 // create a placeholder date range
 // between two months ago and today.
 
+sleep(3); // mock delay
+
 $dp = new DatePeriod(
     new DateTime('2 months ago'),
     new DateInterval('P1D'),
