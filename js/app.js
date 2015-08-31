@@ -151,8 +151,6 @@ app.directive('analyticsRates', function($window, $http) {
         .success(function(json) {
           scope.$watch('range', function(range) {
 
-            //
-
             // build chart
             $window.c3.generate({
               axis: {
@@ -177,7 +175,10 @@ app.directive('analyticsRates', function($window, $http) {
                 x: 'Date',
                 columns: [
                   ['Date'].concat(json.dates.slice(range)),
-                  ['USD/EUR'].concat(json.rates.slice(range))
+                  ['EUR/AUD'].concat(json.rates['EUR/AUD'].slice(range)),
+                  ['EUR/CAD'].concat(json.rates['EUR/CAD'].slice(range)),
+                  ['EUR/GBP'].concat(json.rates['EUR/GBP'].slice(range)),
+                  ['EUR/USD'].concat(json.rates['EUR/USD'].slice(range))
                 ],
                 type: 'spline',
               },
@@ -190,10 +191,6 @@ app.directive('analyticsRates', function($window, $http) {
                 enabled: (range === 0) // enable zoom for 'All Time' view
               }
             });
-
-
-            //
-
           });
         });
     }
