@@ -72,9 +72,9 @@ app.directive('analyticsDates', function($http) {
 });
 
 /**
- * analyticsUsers
+ * analyticsMessages
  */
-app.directive('analyticsUsers', function($window, $http) {
+app.directive('analyticsMessages', function($window, $http) {
   return {
     replace: true,
     restrict: 'A',
@@ -82,7 +82,7 @@ app.directive('analyticsUsers', function($window, $http) {
       range: '=',
       ajax:  '@'
     },
-    templateUrl: 'view/directive/analytics-users.html',
+    templateUrl: 'view/directive/analytics-messages.html',
     link: function(scope, element) {
       $http.get(scope.ajax)
         .error(function() {
@@ -90,6 +90,12 @@ app.directive('analyticsUsers', function($window, $http) {
         })
         .success(function(json) {
           scope.$watch('range', function(range) {
+            // get total for selected range
+            scope.rangeTotal = json.users.slice(range)
+              .reduce(function(curr, prev) {
+                return curr + prev;
+              });
+
             // build chart
             $window.c3.generate({
               axis: {
@@ -101,7 +107,7 @@ app.directive('analyticsUsers', function($window, $http) {
                   }
                 }
               },
-              bindto: '#analytics-users',
+              bindto: '#analytics-messages',
               data: {
                 x: 'date',
                 columns: [

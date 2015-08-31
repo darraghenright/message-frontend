@@ -12,6 +12,10 @@
         {
             margin-top: 24px;
         }
+        .analytics-loading
+        {
+            color: #999;
+        }
         </style>
     </head>
     <body>
@@ -27,7 +31,7 @@
                 <div class="col-md-12">
                     <ul class="nav nav-tabs">
                         <li class="active">
-                            <a href="#users" role="tab" data-toggle="tab">Users</a>
+                            <a href="#messages" role="tab" data-toggle="tab">Messages</a>
                         </li>
                         <li>
                             <a href="#currencies" role="tab" data-toggle="tab">Currencies</a>
@@ -52,9 +56,9 @@
                 <div class="col-md-12">
                     <div class="tab-content">
                         <!-- users -->
-                        <div role="tabpanel" class="tab-pane active" id="users">
-                            <h3>Users</h3>
-                            <div range="range" analytics-users ajax="json/analytics-users.php"></div>
+                        <div role="tabpanel" class="tab-pane active" id="messages">
+                            <h3>Messages</h3>
+                            <div range="range" analytics-messages ajax="json/analytics-messages.php"></div>
                         </div>
                         <!-- currencies -->
                         <div role="tabpanel" class="tab-pane" id="currencies">
