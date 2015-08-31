@@ -91,7 +91,7 @@ app.directive('analyticsMessages', function($window, $http) {
         .success(function(json) {
           scope.$watch('range', function(range) {
             // get total for selected range
-            scope.rangeTotal = json.users.slice(range)
+            scope.rangeTotal = json.messages.slice(range)
               .reduce(function(curr, prev) {
                 return curr + prev;
               });
@@ -109,10 +109,10 @@ app.directive('analyticsMessages', function($window, $http) {
               },
               bindto: '#analytics-messages',
               data: {
-                x: 'date',
+                x: 'Date',
                 columns: [
-                  ['date'].concat(json.date.slice(range)),
-                  ['users'].concat(json.users.slice(range))
+                  ['Date'].concat(json.date.slice(range)),
+                  ['Messages'].concat(json.messages.slice(range))
                 ],
                 type: 'spline',
               },

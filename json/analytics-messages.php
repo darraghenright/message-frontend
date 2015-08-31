@@ -44,7 +44,7 @@ $merged = array_replace($range, $results);
 
 $rotated = [
     'date'  => array_keys($merged),
-    'users' => array_values($merged),
+    'messages' => array_values($merged),
 ];
 
 header('Content-Type: application/json');
