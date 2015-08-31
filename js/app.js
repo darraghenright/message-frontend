@@ -43,6 +43,7 @@ app.directive('analyticsRange', function(ranges) {
  *
  * Show data date range according
  * to selected analyticsRange.
+ * Injects `$http` service.
  */
 app.directive('analyticsDates', function($http) {
   return {
@@ -54,7 +55,7 @@ app.directive('analyticsDates', function($http) {
     },
     template: [
       '<div>',
-        '<div ng-hide="last">Loading dates... One moment.</div>',
+        '<div ng-hide="last" class="analytics-loading">Loading dates... One moment.</div>',
         '<div ng-show="last">{{ first }} to {{ last }}</div>',
       '</div>'
     ].join(''),
@@ -64,6 +65,57 @@ app.directive('analyticsDates', function($http) {
           scope.last = json.dates.slice(-1)[0];
           scope.$watch('range', function(range) {
             scope.first = json.dates.slice(range)[0];
+          });
+        });
+    }
+  };
+});
+
+/**
+ * analyticsCountries
+ */
+app.directive('analyticsCountries', function($window, $http) {
+  return {
+    replace: true,
+    restrict: 'A',
+    scope: {
+      range: '=',
+      ajax:  '@'
+    },
+    template: [
+        '<div id="analytics-countries">',
+          '<div class="analytics-loading">Loading countries... One moment.</div>',
+        '</div>',
+      '</div>'
+    ].join(''),
+    link: function(scope, element) {
+      $http.get(scope.ajax)
+        .error(function(data) {
+          element.text(data);
+        })
+        .success(function(json) {
+          scope.$watch('range', function(range) {
+            // build columns
+            var columns = json.map(function(country) {
+              // apply range and sum value
+              var rangeTotal = country.data.slice(range)
+                .reduce(function(curr, prev) {
+                  return curr + prev;
+              });
+              return [country.name, rangeTotal];
+            });
+
+            // build chart
+            $window.c3.generate({
+              bindto: '#analytics-countries',
+              data: {
+                columns: columns,
+                type : 'donut'
+              },
+              donut: {
+                title: 'Countries'
+              }
+            });
           });
         });
     }
