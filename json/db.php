@@ -1,27 +1,26 @@
 <?php
 
 /**
- * getMinAndMaxDates
+ * getDateRange
  *
  * @param  PDO    $db
  * @param  string $format
  * @return array
  */
-function getMinAndMaxDates(PDO $db, $format = 'Y-m-d')
+function getDateRange(PDO $db, $format = 'Y-m-d')
 {
     $stmt = $db->prepare('
-        SELECT MIN(DATE(time_placed)) AS date_min,
-               MAX(DATE(time_placed)) AS date_max
+        SELECT MIN(DATE(time_placed)) AS date_min
           FROM trade_message
     ');
 
     $stmt->execute();
-    $dates = $stmt->fetch(PDO::FETCH_OBJ);
+    $dateMin = $stmt->fetch(PDO::FETCH_COLUMN);
 
     $dp = new DatePeriod(
-        new DateTime($dates->date_min),
+        new DateTime($dateMin),
         new DateInterval('P1D'),
-        new DateTime($dates->date_max)
+        new DateTime('tomorrow')
     );
 
     return array_map(function($dt) use ($format){

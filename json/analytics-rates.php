@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/db.php';
 
-$dates = getMinAndMaxDates($db);
+$dates = getDateRange($db);
 $range = array_fill_keys($dates, 0);
 
 $stmt = $db->prepare('

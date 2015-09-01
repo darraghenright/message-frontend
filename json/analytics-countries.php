@@ -3,7 +3,7 @@
 require_once __DIR__ . '/db.php';
 
 // build available date range
-$dates = getMinAndMaxDates($db);
+$dates = getDateRange($db);
 $range = array_fill_keys($dates, 0);
 
 // get list of originating countries
