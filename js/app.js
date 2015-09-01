@@ -39,6 +39,28 @@ app.directive('analyticsRange', function(ranges) {
 });
 
 /**
+ * analyticsRefresh
+ *
+ * Reload the page
+ */
+app.directive('analyticsRefresh', function($window) {
+  return {
+    replace: true,
+    restrict: 'A',
+    template: [
+      '<a class="btn btn-default" ng-click="refresh()">',
+        '<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Refresh',
+      '</a>'
+    ].join(''),
+    link: function(scope) {
+      scope.refresh = function() {
+         $window.location.reload();
+      };
+    }
+  };
+});
+
+/**
  * analyticsDates
  *
  * Show data date range according
